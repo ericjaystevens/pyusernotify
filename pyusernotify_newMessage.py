@@ -18,7 +18,7 @@ def pyusernotify_newMessage(name, fromAddress, template):
     print("entered new message named" + name)
     testIfnameExists(name)
     ds = getDataStore()
-    ds.writerow([name, fromAddress, template])
+    ds.write( '\n' + name + "," + fromAddress + "," + template )
     
     
     
@@ -36,9 +36,8 @@ def testIfnameExists(name):
     return
 
 def getDataStore():
-    ofile = open(".\messages.csv","wb")
-    writer = csv.writer(ofile,delimiter=",",quotechar='|',quoting=csv.QUOTE_MINIMAL)
-    return writer
+    ofile = open(".\messages.csv","a")
+    return ofile
 
 if __name__ == '__main__':
     args = get_args()
