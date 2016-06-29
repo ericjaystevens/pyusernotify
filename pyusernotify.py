@@ -3,6 +3,7 @@ import argparse
 import re
 import os.path
 import csv
+ds =".\messages.csv"
 
 ### Handle Arguments
 def get_args():
@@ -15,6 +16,17 @@ def get_args():
 
 ### Main ###
 def pyusernotify(message,toAddress):
+    #do some work
+    return NotImplemented
+
+def getMessage(name):
+    #look in datastore for line with NameError
+    with open(ds,'rt', encoding="ascii") as csvfile:
+        messages = csv.reader(csvfile,delimiter=',',quotechar='|')
+        for message in messages:
+            print(message)
+            if message.name == name:
+                return message
 
 if __name__ == '__main__':
     args = get_args()

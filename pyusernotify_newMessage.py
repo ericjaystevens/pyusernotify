@@ -3,6 +3,7 @@ import argparse
 import re
 import os.path
 import csv
+ds =".\messages.csv"
 
 ### Handle Arguments
 def get_args():
@@ -36,7 +37,7 @@ def testIfnameExists(name):
     return
 
 def getDataStore():
-    ofile = open(".\messages.csv","a")
+    ofile = open(ds,"a")
     return ofile
 
 if __name__ == '__main__':
