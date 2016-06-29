@@ -3,6 +3,7 @@ import unittest
 import pyusernotify_newMessage as nm
 import pyusernotify as pun
 import pyUserMessage as pum
+import pyUserMessages as pums
 
 class TestpyUserNotifynewmessage(unittest.TestCase):
 
@@ -16,10 +17,14 @@ class TestpyUserNotifynewmessage(unittest.TestCase):
     def test_newMessageObject(self):
         self.message = pum.pyUserMessage("test1", "me@you.com", '.\templateExample.md')
 
+    def test_pyUserMessages(self):
+        messages = pums.pyUserMessages()
+        
     def test_pyusernotifyGetMessage(self):
         self.message = pum.pyUserMessage("test1", "me@you.com", '.\templateExample.md')
         nm.pyusernotify_newMessage("test1", "me@you.com", '.\templateExample.md')
-        self.assertEqual(pun.getMessage("test1"),self.message)
+        messages = pums.pyUserMessages()
+
 
 if __name__ == '__main__':
     unittest.main()
