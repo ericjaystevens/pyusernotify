@@ -5,7 +5,12 @@ import pyusernotify as pun
 import pyUserMessage as pum
 import pyUserMessages as pums
 
+testName = "test1"
+testEmail = "me@you.com"
+testTemplate = ".\templateExample.md"
+
 class TestpyUserNotifynewmessage(unittest.TestCase):
+
 
     def setup(self):
         self.templateFile = file = open('.\templateExample.md', 'w+')
@@ -24,6 +29,11 @@ class TestpyUserNotifynewmessage(unittest.TestCase):
         self.message = pum.pyUserMessage("test1", "me@you.com", '.\templateExample.md')
         nm.pyusernotify_newMessage("test1", "me@you.com", '.\templateExample.md')
         messages = pums.pyUserMessages()
+
+    def test_removeMessageFromMessages(self):
+        messages = pums.pyUserMessages()
+        message = pum.pyUserMessage(testName,testEmail,testTemplate)
+        messages.remove(message.name)
 
 
 if __name__ == '__main__':
