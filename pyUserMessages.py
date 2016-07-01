@@ -2,6 +2,7 @@ import pyUserMessage
 csvPath =".\messages.csv"
 import csv
 
+
 class pyUserMessages:
     def __init__(self):
         self.messages = []
@@ -9,7 +10,20 @@ class pyUserMessages:
         with open(csvPath,'rt', encoding="ascii") as csvfile:
             messages = csv.reader(csvfile,delimiter=',',quotechar='|')
             for line in messages:
-                name = line[0]
-                email = line[1]
-                templatePath = line[2]
-                message = pyUserMessage.pyUserMessage(name, email, templatePath)
+                if line:
+                    name = line[0]
+                    email = line[1]
+                    templatePath = line[2]
+                    message = pyUserMessage.pyUserMessage(name, email, templatePath)
+
+    def remove(self,name):
+        f = open(csvPath,"r")
+        lines = f.readlines()
+        f.close
+
+        f = open(csvPath,"w")
+        for line in lines:
+            nameFromLine = line.split(",")[0]
+            if name != nameFromLine:
+                f.write(line)
+            	
