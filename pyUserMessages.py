@@ -26,4 +26,20 @@ class pyUserMessages:
             nameFromLine = line.split(",")[0]
             if name != nameFromLine:
                 f.write(line)
+        f.close()
+
+    def get(self,name):
+        f = open(csvPath,"r")
+        lines = f.readlines()
+
+        for line in lines:
+            nameFromLine = line.split(",")[0]
+            if name == nameFromLine:
+                email = line[1]
+                templatePath = line[2]
+                message = pyUserMessage.pyUserMessage(name, email, templatePath)
+                f.close()
+                return message
+        
+        f.close()
             	
