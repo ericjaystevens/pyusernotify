@@ -1,27 +1,35 @@
 #!/usr/bin/env python
 import argparse
 import re
-import os.path
-import csv
+import pyUserMessage as msg
+import pyUserMessages as msgs
+
 ds =".\messages.csv"
 
 ### Handle Arguments
 def get_args():
-    parser = argparse.ArgumentParser(description="Create a new message type")
+    parser = argparse.ArgumentParser(
+        description="Create a new message type", 
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent('''
+        Examples
+        --------
+        pyusernotify_newMessage.py --name accountNotify --fromAddress admin@acme.com --tempalte .\message.mkd
+      
+    ''')
+    )
     parser.add_argument("-n","--name", required=True, help="Desired name of new message")
     parser.add_argument("-f","--fromAddress", required=True, help="From address")
     parser.add_argument("-t","--template", required=True, help="Path to template markdown file")
-    parser.add_argument("-v","--verbose", help="Increaser verbosity")
+    parser.add_argument("-v","--verbose", help="Increase verbosity")
     return parser.parse_args()
 
 ### Main Function ###
 def pyusernotify_newMessage(name, fromAddress, template):
     print("entered new message named" + name)
-    testIfnameExists(name)
-    ds = getDataStore()
-    ds.write( '\n' + name + "," + fromAddress + "," + template )
-    
-    
+    message = msg.pyUserMessage(name,fromAddress,template)
+    messages = msgs.pyUserMessages()
+    messages.add(message)    
     
 def validateArgs(args):
     if (not args.name.isalnum()):
@@ -32,13 +40,6 @@ def validateArgs(args):
 
     if (not os.path.isfile(args.template)):
         raise ValueError("No file found at template path")
-
-def testIfnameExists(name):
-    return
-
-def getDataStore():
-    ofile = open(ds,"a")
-    return ofile
 
 if __name__ == '__main__':
     args = get_args()
