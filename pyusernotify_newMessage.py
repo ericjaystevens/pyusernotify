@@ -3,6 +3,8 @@ import argparse
 import re
 import pyUserMessage as msg
 import pyUserMessages as msgs
+import textwrap
+import os
 
 ds =".\messages.csv"
 
