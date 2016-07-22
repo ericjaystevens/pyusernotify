@@ -9,6 +9,7 @@ import os
 testName = "test1"
 testEmail = "me@you.com"
 testTemplate = ".\templateExample.md"
+testToAddress = "ericjaystevens@gmail.com"
 
 class TestpyUserNotifynewmessage(unittest.TestCase):
 
@@ -63,10 +64,14 @@ class TestpyUserNotifynewmessage(unittest.TestCase):
         self.assertEqual(msg.name,"accountNotify")
         msgs.remove(msg.name)
     
-    def test_pyUerMessageInit(self):
+    def test_pyUerMessage_send(self):
+        msg = pum.pyUserMessage(testName,testEmail,testTemplate)
         msgs = pums.pyUserMessages()
-        for msg in msgs.messages:
-            print(msg)
+        msgs.add(pum)
+        msg.send(testToAddress)
+        
+    
+
 
 if __name__ == '__main__':
     unittest.main()
