@@ -25,7 +25,7 @@ class pyUserMessage:
             smtpObj = smtplib.SMTP(smtpServer)
             smtpObj.sendmail(sender, receivers, message)         
         except SMTPException:
-            print "Error: unable to send email"
+            print("Error: unable to send email")
 
     def getMessage(self):
         msgAsMarkdown = ""
@@ -33,12 +33,12 @@ class pyUserMessage:
         # for each line in file
         # set the first line to message 
         # put the rest into a long string
-        with open(self.templatePath) as f:
-            for i, l in enumerate(f):
-                if(i==1):
-                    subject = f[i]
-                else:
-                    msgAsMarkdown = msgAsMarkdown + f[i]
+        f = open(self.templatePath,"r")
+        lines = f.readlines()
+        subject = lines[0]
+
+        for line in lines:
+            msgAsMarkdown = msgAsMarkdown + line
         
         markdowner = Markdown()
         message = markdowner.convert(msgAsMarkdown)

@@ -8,8 +8,8 @@ import os
 
 testName = "test1"
 testEmail = "me@you.com"
-testTemplate = ".\templateExample.md"
-testToAddress = "ericjaystevens@gmail.com"
+testTemplate = "templateExample.md"
+testToAddress = "ejsteven@oakland.edu"
 
 class TestpyUserNotifynewmessage(unittest.TestCase):
 
@@ -67,7 +67,7 @@ class TestpyUserNotifynewmessage(unittest.TestCase):
     def test_pyUerMessage_send(self):
         msg = pum.pyUserMessage(testName,testEmail,testTemplate)
         msgs = pums.pyUserMessages()
-        msgs.add(pum)
+        msgs.add(msg)
         msg.send(testToAddress)
         
     
