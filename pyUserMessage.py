@@ -2,6 +2,8 @@ import smtplib
 import configparser
 import pyUserMessages as pums
 from markdown2 import Markdown
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 configFile = "setup.ini"
 
@@ -16,14 +18,18 @@ class pyUserMessage:
         config.read(configFile)
         smtpServer = config['Default']['SmtpServer']
 
-        sender = self.email
-
         receivers = toAddress
-        message = self.getMessage()
+        msg = MIMEMultipart('alternative')
+        msg['From'] = self.email
+        sender = self.email
+        msg['Subject'] = self.getSubject()
+        html = self.getMessage
+        part1 = MIMEText(html, 'html')
+        msg.attach(part1)
 
         try:
             smtpObj = smtplib.SMTP(smtpServer)
-            smtpObj.sendmail(sender, receivers, message)         
+            smtpObj.sendmail(sender, receivers, msg.as_string())         
         except SMTPException:
             print("Error: unable to send email")
 
@@ -37,22 +43,19 @@ class pyUserMessage:
         lines = f.readlines()
         subject = lines[0]
 
+
         for line in lines:
             msgAsMarkdown = msgAsMarkdown + line
         
         markdowner = Markdown()
         message = markdowner.convert(msgAsMarkdown)
+        f.close()
         return message
 
     def getSubject(self):
-        msgAsMarkdown = ""
-        subject = ""
-        # for each line in file
-        # set the first line to message 
-        # put the rest into a long string
-        with open(self.templatePath) as f:
-            for i, l in enumerate(f):
-                if(i==1):
-                    subject = f[i]
+        f = open(self.templatePath,"r")
+        lines = f.readlines()
+        subject = lines[0]
+        f.close()
 
         return subject
