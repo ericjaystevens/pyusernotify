@@ -2,13 +2,10 @@ import smtplib
 import configparser
 import pyUserMessages as pums
 from markdown2 import Markdown
-<<<<<<< HEAD
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-=======
 from mailer import Mailer
 from mailer import Message
->>>>>>> 4bda1781467f3b80939940b860b04f7eeb537cb4
 
 configFile = "setup.ini"
 
@@ -24,13 +21,13 @@ class pyUserMessage:
         smtpServer = config['Default']['SmtpServer']
 
         receivers = toAddress
-        message = Message(From=sender,To=toAddress)
-        message.Subject = self.getSubject()
-        message.Html = self.getMessage()
-        sender = Mailer(smtpServer)
+        msg = Message(From=self.email,To=toAddress)
+        msg.Subject = self.getSubject()
+        msg.Html = self.getMessage()
+        mailer = Mailer(smtpServer)
 
         try:
-            sender.send(message)
+            mailer.send(msg) #.send(msg)
         except SMTPException:
             print("Error: unable to send email")
 
