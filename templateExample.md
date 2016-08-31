@@ -1,4 +1,12 @@
 This is a message
 
-This is a body:x
+### heading
+
+This is a body
+
+* point 1
+* point 2
+* point 3
+
+***Stron***
 
