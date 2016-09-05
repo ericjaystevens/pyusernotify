@@ -1,5 +1,5 @@
 # pyusernotify
-Allows sys admins to email users of events using prepared messages, and allows users to opt out of nofication.
+Allows sys admins to email users of events using prepared messages, this allows you to keep the email format and code required to send an email seperate from the logic of your automated trigger event, script, or application. 
 
 Instructions for use
 ====================
@@ -7,14 +7,15 @@ Instructions for use
 prepare template
 ----------------
 
-create an email template text file to create the body of your text. Use markdown syntex. use $variableName to create replaceble items.  The first Line will be the subject of your email.
+create an email template text file to create the body of your text. Use markdown syntex. The first  two lines will not be part of your email. name the file example.pun
 
 ### Example Template
 
 ~~~~
-Password Will Expire soon for $username
+from: admin@example.com
+subject: Password Will Expire soon for $username
 
-$firstname,
+sir or madam,
 
 Your Password will expire soon? Visit [This Link](www.passwordreset.example.com) to reset your password before you are locked out!
 
@@ -23,22 +24,16 @@ Sincerly,
 Your IT Team
 
 ![Logo](/path/to/img.jpg )
-To opt out of this message click $optOutLink
 ~~~~~
 
-Then initialize the new message
+You can then send the email message, by calling the webservice from your script or application. 
 
-~~~~{.bash}
-pyusernotify-newMessage -tempalte pathToTemplate.md -from fromAddress -name exampleMessageName 
-~~~~~
+This example is in powershell but the webservice can be consumed in any language. 
+~~~{powershell}
+New-WebServiceProxy -Uri http://yourIP:5000/send/example/user@example.com -ErrorAction:SilentlyContinue
+~~~
 
-You can then send the email message
-
-~~~{.bash}
-pyusernotify -message exampleMesageName -to user@example.edu -replace {'firstName': 'Zara', 'userName': 'zpara'}
-~~~~
-
-The user will then be sent an html based email.
+The user will then be sent an html based email, based on the content of your templeate.
 
 
 
