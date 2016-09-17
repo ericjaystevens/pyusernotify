@@ -35,6 +35,16 @@ New-WebServiceProxy -Uri http://yourIP:5000/send/example/user@example.com -Error
 
 The user will then be sent an html based email, based on the content of your templeate.
 
+<p>sir or madam,</p>
+
+<p>Your Password will expire soon? Visit <a href="www.passwordreset.example.com">This Link</a> to reset your password before you are locked out!</p>
+
+<p>Sincerly,</p>
+
+<p>Your IT Team</p>
+
+<p><img src="/path/to/img.jpg " alt="Logo" /></p>
+
 
 
 
