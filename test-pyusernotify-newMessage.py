@@ -14,62 +14,23 @@ testToAddress = "ejsteven@oakland.edu"
 class TestpyUserNotifynewmessage(unittest.TestCase):
 
 
-    def setUp(self):
-        file = open('.\messages.csv', 'w')
-        file.close()
-        #file.write("Name,fromAddress,templatePath")
+    def test_getFromEmail(self):
+        message = pum.pyUserMessage("example")
+        self.assertEqual(message.fromEmail,"admin@example.com") 
 
-    def test_pyUserNotify_newMessage(self):
-        nm.pyusernotify_newMessage("test1", "me@you.com", '.\templateExample.md')
-        msgs = pums.pyUserMessages()
-        msgs.remove("test1")
+    def test_getSubject(self):
+        message = pum.pyUserMessage("example")
+        self.assertEqual(message.getSubject(),'Password Will Expire soon!')
 
+    def test_getMessage(self):
+        message = pum.pyUserMessage("example")
+        message.getMessage()
 
-    def test_newMessageObject(self):
-        message = pum.pyUserMessage("test1", "me@you.com", '.\templateExample.md')
-        msgs = pums.pyUserMessages()
-        msgs.remove("test1")
+    def test_sendMessage(self):
+        message = pum.pyUserMessage("sendableExample")
+        toAddress = testToAddress
+        message.send(toAddress)
 
-    def test_pyUserMessages(self):
-        messages = pums.pyUserMessages()
-        
-    def test_pyusernotifyGetMessage(self):
-        self.message = pum.pyUserMessage("test1", "me@you.com", '.\templateExample.md')
-        nm.pyusernotify_newMessage("test1", "me@you.com", '.\templateExample.md')
-        msgs = pums.pyUserMessages()
-        msgs.remove("test1")
-        
-
-    def test_removeMessageFromMessages(self):
-        messages = pums.pyUserMessages()
-        message = pum.pyUserMessage(testName,testEmail,testTemplate)
-        messages.remove(message.name)
-    
-    def test_addToMessages(self):
-        message = pum.pyUserMessage("test1", "me@you.com", '.\templateExample.md')
-        msgs = pums.pyUserMessages()
-        msgs.add(message)
-        msgs.remove("test1")
-
-    def test_pyUserMessagesAdd(self):
-        messages = pums.pyUserMessages()
-        message = pum.pyUserMessage("testaccountNotify",testEmail,testTemplate)
-        messages.add(message)
-        messages.remove(message.name)
-
-    def test_pyUserNotify_newMessageFull(self):
-        os.system("pyusernotify_newMessage.py --name accountNotify --fromAddress admin@acme.com --template .\mark.down")
-        msgs = pums.pyUserMessages()
-        msg = msgs.get("accountNotify")
-        self.assertEqual(msg.name,"accountNotify")
-        msgs.remove(msg.name)
-    
-    def test_pyUerMessage_send(self):
-        msg = pum.pyUserMessage(testName,testEmail,testTemplate)
-        msgs = pums.pyUserMessages()
-        msgs.add(msg)
-        msg.send(testToAddress)
-        
     
 
 

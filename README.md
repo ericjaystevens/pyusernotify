@@ -13,7 +13,7 @@ create an email template text file to create the body of your text. Use markdown
 
 ~~~~
 from: admin@example.com
-subject: Password Will Expire soon for $username
+subject: Password Will Expire soon!
 
 sir or madam,
 

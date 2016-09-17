@@ -10,10 +10,12 @@ from mailer import Message
 configFile = "setup.ini"
 
 class pyUserMessage:
-    def __init__(self, name, email, templatePath):
+    def __init__(self, name):
         self.name = name
-        self.email = email
-        self.templatePath = templatePath
+        config = configparser.ConfigParser()
+        config.read(configFile)
+        self.templatePath = config['Default']['templateDir'] + name + '.pun'
+        self.fromEmail = self.getFromEmail()
 
     def send(self,toAddress):
         config = configparser.ConfigParser()
@@ -21,7 +23,7 @@ class pyUserMessage:
         smtpServer = config['Default']['SmtpServer']
 
         receivers = toAddress
-        msg = Message(From=self.email,To=toAddress)
+        msg = Message(From=self.fromEmail,To=toAddress)
         msg.Subject = self.getSubject()
         msg.Html = self.getMessage()
         mailer = Mailer(smtpServer)
@@ -39,12 +41,17 @@ class pyUserMessage:
         # put the rest into a long string
         f = open(self.templatePath,"r")
         lines = f.readlines()
-        subject = lines[0]
 
+        firstLineOfMessage = 0
+        
 
         for line in lines:
-            if not (line == lines[0]):
-                msgAsMarkdown = msgAsMarkdown + line
+            firstLineOfMessage = firstLineOfMessage + 1
+            if line == '\n':
+                break
+   
+        for i in range(firstLineOfMessage,len(lines)):
+            msgAsMarkdown = msgAsMarkdown + lines[i]
         
         markdowner = Markdown()
         message = markdowner.convert(msgAsMarkdown)
@@ -54,7 +61,16 @@ class pyUserMessage:
     def getSubject(self):
         f = open(self.templatePath,"r")
         lines = f.readlines()
-        subject = lines[0]
+        subjectLine = lines[1]
+        subject = subjectLine.split(":")[1].strip()
         f.close()
         return subject
+
+    def getFromEmail(self):
+        f = open(self.templatePath,"r")
+        lines = f.readlines()
+        emailLine = lines[0]
+        email = emailLine.split(":")[1].strip()
+        f.close()
+        return email
 

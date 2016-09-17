@@ -1,14 +1,13 @@
 #!flask/bin/python
 from flask import Flask
-import pyUserMessages as pums
+import pyUserMessage as pum
 
 app = Flask(__name__)
 
 @app.route('/send/<string:message>/<string:toEmail>', methods=['GET'])
 def index(message, toEmail):
 
-    msgs = pums.pyUserMessages()
-    msg = msgs.get(message)
+    msg = pum.pyUserMessage(message)
     msg.send(toEmail)
     return 'OK'
     
